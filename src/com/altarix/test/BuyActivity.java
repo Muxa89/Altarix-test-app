@@ -16,7 +16,6 @@ public class BuyActivity extends Activity {
     private static TextView typeView;
     private static TextView countView;
     private static Button buyButton;
-    private static ScrollView scrollView;
 
     private List<Ware> wares;
     private Ware currentWare;
@@ -32,14 +31,39 @@ public class BuyActivity extends Activity {
 
         initViews();
 
+        bind();
+
         loadWares();
     }
+
 
     private void initViews() {
         titleView = (TextView) findViewById(R.id.titleView);
         typeView = (TextView) findViewById(R.id.typeView);
         countView = (TextView) findViewById(R.id.countView);
         buyButton = (Button) findViewById(R.id.buyButton);
+    }
+
+    private void bind() {
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentWare == null) return;
+
+                int count = currentWare.getCount();
+                if (count > 1) {
+                    currentWare.setCount(currentWare.getCount() - 1);
+                } else {
+                    wares.remove(currentWare);
+                    if (wares.size() > 0) {
+                        currentWare = wares.get(0);
+                    } else {
+                        currentWare = null;
+                    }
+                }
+                fillWare(currentWare);
+            }
+        });
     }
 
     private void loadWares() {
@@ -49,13 +73,19 @@ public class BuyActivity extends Activity {
         if (wares != null && wares.size() > 0) {
             currentWare = wares.get(0);
             fillWare(currentWare);
-
         }
     }
 
     private void fillWare(Ware ware) {
-        titleView.setText(ware.getName());
-        typeView.setText(ware.getType().getName());
-        countView.setText(Integer.toString(ware.getCount()));
+        if (ware != null) {
+            titleView.setText(ware.getName());
+            typeView.setText(ware.getType().getName());
+            countView.setText(Integer.toString(ware.getCount()));
+        } else {
+            titleView.setText("Товар не выбран");
+            typeView.setText("");
+            countView.setText("");
+        }
+        buyButton.setEnabled(ware != null);
     }
 }
