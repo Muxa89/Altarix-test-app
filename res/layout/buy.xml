@@ -16,7 +16,8 @@
                 android:text="Тостер"
                 android:id="@+id/titleView"
                 android:textSize="40dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                />
 
         <LinearLayout
                 android:layout_width="fill_parent"
@@ -73,9 +74,10 @@
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/buyButton"
                 android:text="Купить"
                 android:textSize="25dp"
-                android:id="@+id/buyButton"/>
+                android:onClick="buyWare"/>
     </LinearLayout>
 
     <LinearLayout
@@ -88,14 +90,17 @@
                 android:layout_width="0dp"
                 android:text="Покупка"
                 android:layout_weight="1"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:background="#ffa8a8a8"/>
+
         <Button
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
                 android:text="Продажа"
                 android:layout_weight="1"
                 android:textSize="25dp"
-                />
+                android:background="#ffd7d7d7"
+                android:onClick="toSellPage"/>
     </LinearLayout>
 </LinearLayout>
 
