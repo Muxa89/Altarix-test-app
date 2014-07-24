@@ -1,5 +1,7 @@
 package com.altarix.test;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -7,6 +9,6 @@ import java.util.List;
  */
 public interface IWaresProvider {
 
-    public List<Ware> getWares();
+    public WareStorage getWareStorage();
 
 }

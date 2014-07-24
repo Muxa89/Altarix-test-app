@@ -11,16 +11,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.altarix.test.FakeWaresProvider;
-import com.altarix.test.IWaresProvider;
-import com.altarix.test.R;
-import com.altarix.test.Ware;
+import com.altarix.test.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BuyActivity extends Activity {
 
+    public static final int SELL_ACTIVITY_CODE = 10;
     private static TextView titleView;
     private static TextView typeView;
     private static TextView countView;
@@ -28,7 +28,7 @@ public class BuyActivity extends Activity {
     private static ProgressBar position;
     private static LinearLayout buyPageContainer;
 
-    private List<Ware> wares;
+    private WareStorage wareStorage;
     private Ware currentWare;
 
     @Override
@@ -72,11 +72,11 @@ public class BuyActivity extends Activity {
     }
 
     private void scrollWareList(boolean scrolledToLeft) {
-        if (wares.size() == 0) return;
+        if (wareStorage.size() == 0) return;
 
-        int currentPosition = wares.indexOf(currentWare);
+        int currentPosition = wareStorage.indexOf(currentWare);
 
-        if ((currentPosition == 0 && scrolledToLeft) || (currentPosition == wares.size() - 1 && !scrolledToLeft))
+        if ((currentPosition == 0 && scrolledToLeft) || (currentPosition == wareStorage.size() - 1 && !scrolledToLeft))
             return;
 
         if (scrolledToLeft) {
@@ -85,39 +85,36 @@ public class BuyActivity extends Activity {
             currentPosition++;
         }
 
-        currentWare = wares.get(currentPosition);
+        currentWare = wareStorage.get(currentPosition);
         fill(currentWare);
     }
 
     public void buyWare(View view) {
         if (currentWare == null) return;
-
-        int count = currentWare.getCount();
-        if (count > 1) {
-            currentWare.setCount(currentWare.getCount() - 1);
-        } else {
-            int index = wares.indexOf(currentWare);
-            wares.remove(currentWare);
-            if (wares.size() > 0) {
-                currentWare = wares.get(index == 0 ? 0 : index - 1);
+        int index = wareStorage.indexOf(currentWare);
+        wareStorage.remove(currentWare, 1);
+        if (wareStorage.getCount(currentWare) == 0) {
+            if (wareStorage.size() > 0) {
+                currentWare = wareStorage.get(index == 0 ? 0 : index - 1);
             } else {
                 currentWare = null;
             }
         }
+
         fill(currentWare);
     }
 
     public void toSellPage(View view) {
         Intent intent = new Intent(this, SellActivity.class);
-        startActivityForResult(intent, 10);
+        startActivityForResult(intent, SELL_ACTIVITY_CODE);
     }
 
     private void loadWares() {
         IWaresProvider provider = new FakeWaresProvider();
-        wares = provider.getWares();
+        wareStorage = provider.getWareStorage();
 
-        if (wares != null && wares.size() > 0) {
-            currentWare = wares.get(0);
+        if (wareStorage != null && wareStorage.size() > 0) {
+            currentWare = wareStorage.get(0);
             fill(currentWare);
         } else {
             fill(null);
@@ -125,18 +122,18 @@ public class BuyActivity extends Activity {
     }
 
     private void fill(Ware ware) {
-        if (wares != null && wares.size() > 1) {
+        if (wareStorage != null && wareStorage.size() > 1) {
             position.setVisibility(View.VISIBLE);
-            position.setMax(wares.size() - 1);
-            position.setProgress(wares.indexOf(ware));
+            position.setMax(wareStorage.size() - 1);
+            position.setProgress(wareStorage.indexOf(ware));
         } else {
             position.setVisibility(View.INVISIBLE);
         }
 
         if (ware != null) {
             titleView.setText(ware.getName());
-            typeView.setText(ware.getType().getName());
-            countView.setText(Integer.toString(ware.getCount()));
+            typeView.setText(ware.getType().getTitle());
+            countView.setText(Integer.toString(wareStorage.getCount(ware)));
         } else {
             titleView.setText("Товар не выбран");
             typeView.setText("");
@@ -144,5 +141,28 @@ public class BuyActivity extends Activity {
         }
 
         buyButton.setEnabled(ware != null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case SELL_ACTIVITY_CODE:
+                try {
+                    Log.i("", Integer.toString(wareStorage.size()));
+                    Log.i("", Integer.toString(wareStorage.indexOf(currentWare)));
+                    JSONArray array = new JSONArray(data.getExtras().getString("soldWares"));
+                    WareStorage newWares = new WareStorage(array);
+                    wareStorage.add(newWares);
+                    Log.i("", currentWare.toString());
+                    Log.i("", Integer.toString(wareStorage.size()));
+                    Log.i("", Integer.toString(wareStorage.indexOf(currentWare)));
+                    fill(currentWare);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                return;
+        }
     }
 }
