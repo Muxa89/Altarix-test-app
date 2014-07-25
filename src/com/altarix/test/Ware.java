@@ -10,9 +10,9 @@ public class Ware {
 
     private String name;
     private WareType type;
-    private double price;
+    private int price; // in kopiykas
 
-    public Ware(String name, WareType type, double price) {
+    public Ware(String name, WareType type, int price) {
         this.name = name;
         this.type = type;
         this.price = price;
@@ -21,7 +21,7 @@ public class Ware {
     public Ware(JSONObject object) throws JSONException {
         this.name = object.getString("name");
         this.type = WareType.getByJSONObject(object.getJSONObject("type"));
-        this.price = object.getDouble("price");
+        this.price = object.getInt("price");
     }
 
     public String getName() {
@@ -32,7 +32,7 @@ public class Ware {
         return type;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -60,7 +60,7 @@ public class Ware {
 
         Ware ware = (Ware) o;
 
-        if (Double.compare(ware.price, price) != 0) return false;
+        if (price != ware.price) return false;
         if (name != null ? !name.equals(ware.name) : ware.name != null) return false;
         if (type != ware.type) return false;
 
@@ -69,12 +69,9 @@ public class Ware {
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
+        int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + price;
         return result;
     }
 }

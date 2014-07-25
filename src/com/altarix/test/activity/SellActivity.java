@@ -63,8 +63,8 @@ public class SellActivity extends Activity {
         String title = titleView.getText().toString();
         WareType wareType = WareType.findByTitle(typesSpinner.getSelectedItem().toString());
         Integer count = Integer.valueOf(countView.getText().toString());
-        Double price = Double.valueOf(priceView.getText().toString());
-        soldWares.add(new Ware(title, wareType, price), count);
+        Double price = Double.valueOf(priceView.getText().toString()) * 100;
+        soldWares.add(new Ware(title, wareType, price.intValue()), count);
     }
 
     public void toBuyPage(View view) {

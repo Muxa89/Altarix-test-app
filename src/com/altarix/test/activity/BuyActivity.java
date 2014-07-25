@@ -134,7 +134,7 @@ public class BuyActivity extends Activity {
             titleView.setText(ware.getName());
             typeView.setText(ware.getType().getTitle());
             countView.setText(Integer.toString(wareStorage.getCount(ware)));
-            buyButton.setText(String.format("Купить за %.2f руб.", ware.getPrice()));
+            buyButton.setText(String.format("Купить за %d.%02d руб.", ware.getPrice() / 100, ware.getPrice() % 100));
         } else {
             titleView.setText("Товар не выбран");
             typeView.setText("");
