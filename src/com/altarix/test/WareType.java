@@ -30,8 +30,8 @@ public enum WareType {
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject object = new JSONObject();
-        object.put("title", title);
         object.put("name", name());
+        object.put("title", title);
         return object;
     }
 

@@ -26,6 +26,7 @@ public class SellActivity extends Activity {
     private static TextView titleView;
     private static Spinner typesSpinner;
     private static TextView countView;
+    private static TextView priceView;
 
     private WareStorage soldWares;
 
@@ -55,13 +56,15 @@ public class SellActivity extends Activity {
         typesSpinner.setAdapter(adapter);
 
         countView = (TextView) findViewById(R.id.countView);
+        priceView = (TextView) findViewById(R.id.priceView);
     }
 
     public void sellWare(View view) {
         String title = titleView.getText().toString();
         WareType wareType = WareType.findByTitle(typesSpinner.getSelectedItem().toString());
         Integer count = Integer.valueOf(countView.getText().toString());
-        soldWares.add(new Ware(title, wareType), count);
+        Double price = Double.valueOf(priceView.getText().toString());
+        soldWares.add(new Ware(title, wareType, price), count);
     }
 
     public void toBuyPage(View view) {
@@ -72,13 +75,5 @@ public class SellActivity extends Activity {
         }
         setResult(RESULT_OK, getIntent());
         finish();
-    }
-
-    private String generateJSON(List<Ware> wares) throws JSONException {
-        JSONArray jsonArray = new JSONArray();
-        for (Ware ware : wares) {
-            jsonArray.put(ware.toJSONObject());
-        }
-        return jsonArray.toString();
     }
 }

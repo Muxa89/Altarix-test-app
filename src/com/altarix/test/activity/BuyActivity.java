@@ -134,13 +134,14 @@ public class BuyActivity extends Activity {
             titleView.setText(ware.getName());
             typeView.setText(ware.getType().getTitle());
             countView.setText(Integer.toString(wareStorage.getCount(ware)));
+            buyButton.setText(String.format("Купить за %.2f руб.", ware.getPrice()));
         } else {
             titleView.setText("Товар не выбран");
             typeView.setText("");
             countView.setText("");
         }
 
-        buyButton.setEnabled(ware != null);
+        buyButton.setVisibility(ware != null ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -148,14 +149,10 @@ public class BuyActivity extends Activity {
         switch (requestCode) {
             case SELL_ACTIVITY_CODE:
                 try {
-                    Log.i("", Integer.toString(wareStorage.size()));
-                    Log.i("", Integer.toString(wareStorage.indexOf(currentWare)));
                     JSONArray array = new JSONArray(data.getExtras().getString("soldWares"));
                     WareStorage newWares = new WareStorage(array);
                     wareStorage.add(newWares);
-                    Log.i("", currentWare.toString());
-                    Log.i("", Integer.toString(wareStorage.size()));
-                    Log.i("", Integer.toString(wareStorage.indexOf(currentWare)));
+                    fill(null);
                     fill(currentWare);
                 } catch (JSONException e) {
                     e.printStackTrace();
