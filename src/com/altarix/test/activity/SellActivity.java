@@ -34,8 +34,6 @@ public class SellActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         soldWares = new WareStorage();
 
         setContentView(R.layout.sell);

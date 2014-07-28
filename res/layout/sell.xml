@@ -12,7 +12,7 @@
             android:layout_weight="1">
 
         <LinearLayout
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:padding="20dp"
                 android:orientation="vertical">
@@ -21,8 +21,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Наименование :"
-                    android:textSize="20dp"
+                    android:text="@string/sellTitle"
+                    android:textSize="20sp"
                     android:id="@+id/typeLabelView"
                     android:layout_marginBottom="10dp"/>
 
@@ -30,14 +30,15 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/titleView"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:inputType="text"/>
 
             <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Тип :"
-                    android:textSize="20dp"
+                    android:text="@string/wareType"
+                    android:textSize="20sp"
                     android:id="@+id/typeLabelView1"
                     android:layout_marginBottom="10dp"/>
 
@@ -51,8 +52,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Количество :"
-                    android:textSize="20dp"
+                    android:text="@string/sellCount"
+                    android:textSize="20sp"
                     android:id="@+id/typeLabelView2"
                     android:layout_marginBottom="10dp"/>
 
@@ -61,14 +62,15 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/countView"
                     android:layout_marginBottom="10dp"
-                    android:text="1"/>
+                    android:text="@string/sellCountStartValue"
+                    android:inputType="number"/>
 
             <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Цена, руб. :"
-                    android:textSize="20dp"
+                    android:text="@string/sellPrice"
+                    android:textSize="20sp"
                     android:id="@+id/typeLabelView3"
                     android:layout_marginBottom="10dp"/>
 
@@ -77,14 +79,15 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/priceView"
                     android:layout_marginBottom="10dp"
-                    android:text="100"/>
+                    android:text="@string/sellStartPrice"
+                    android:inputType="numberDecimal"/>
 
             <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/buyButton"
-                    android:text="Продать"
-                    android:textSize="25dp"
+                    android:text="@string/sellButtonText"
+                    android:textSize="25sp"
                     android:onClick="sellWare"/>
         </LinearLayout>
     </ScrollView>
@@ -99,18 +102,18 @@
         <Button
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                android:text="Покупка"
+                android:text="@string/buy"
                 android:layout_weight="1"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:onClick="toBuyPage"
                 android:background="#ffd7d7d7"/>
 
         <Button
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                android:text="Продажа"
+                android:text="@string/sell"
                 android:layout_weight="1"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:background="#ffa8a8a8"/>
     </LinearLayout>
 </LinearLayout>

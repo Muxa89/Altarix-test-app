@@ -3,20 +3,12 @@ package com.altarix.test.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import com.altarix.test.*;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.*;
 
 public class BuyActivity extends Activity {
 
@@ -25,7 +17,7 @@ public class BuyActivity extends Activity {
     private static TextView typeView;
     private static TextView countView;
     private static Button buyButton;
-    private static ProgressBar position;
+    private static SeekBar position;
     private static LinearLayout buyPageContainer;
 
     private WareStorage wareStorage;
@@ -34,8 +26,6 @@ public class BuyActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.buy);
 
@@ -49,8 +39,8 @@ public class BuyActivity extends Activity {
         typeView = (TextView) findViewById(R.id.typeView);
         countView = (TextView) findViewById(R.id.countView);
         buyButton = (Button) findViewById(R.id.buyButton);
-        position = (ProgressBar) findViewById(R.id.position);
         buyPageContainer = (LinearLayout) findViewById(R.id.buyPageContainer);
+        position = (SeekBar) findViewById(R.id.seekBar);
 
         buyPageContainer.setOnTouchListener(new View.OnTouchListener() {
             private float startX = 0.0f;
@@ -63,10 +53,32 @@ public class BuyActivity extends Activity {
                         break;
                     case MotionEvent.ACTION_UP:
                         float finishX = motionEvent.getX();
-                        scrollWareList(finishX > startX);
+                        if (Math.abs(finishX - startX) > 10) {
+                            scrollWareList(finishX > startX);
+                        }
                         break;
                 }
                 return true;
+            }
+        });
+
+        position.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (b) {
+                    currentWare = wareStorage.get(i);
+                    fill(currentWare);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
     }

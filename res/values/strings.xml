@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Altarix-test-app</string>
+    <string name="sellTitle">Наименование :</string>
+    <string name="wareType">Тип :</string>
+    <string name="sellCount">Количество :</string>
+    <string name="sellCountStartValue">1</string>
+    <string name="sellPrice">Цена, руб. :</string>
+    <string name="sellStartPrice">100</string>
+    <string name="sellButtonText">Продать</string>
+    <string name="buy">Покупка</string>
+    <string name="sell">Продажа</string>
+    <string name="buyTitle">Наименование</string>
+    <string name="buyCount">Остаток :</string>
+    <string name="buyButtonText">Купить</string>
 </resources>
