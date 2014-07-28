@@ -165,6 +165,9 @@ public class BuyActivity extends Activity {
                     WareStorage newWares = new WareStorage(array);
                     wareStorage.add(newWares);
                     fill(null);
+                    if (currentWare == null && newWares.size() > 0) {
+                        currentWare = wareStorage.get(0);
+                    }
                     fill(currentWare);
                 } catch (JSONException e) {
                     e.printStackTrace();
