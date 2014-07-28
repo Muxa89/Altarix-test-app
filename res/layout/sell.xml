@@ -31,7 +31,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/titleView"
                     android:layout_marginBottom="10dp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:focusableInTouchMode="true"/>
 
             <TextView
                     android:layout_width="fill_parent"
@@ -63,7 +64,8 @@
                     android:id="@+id/countView"
                     android:layout_marginBottom="10dp"
                     android:text="@string/sellCountStartValue"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:focusableInTouchMode="true"/>
 
             <TextView
                     android:layout_width="fill_parent"
@@ -79,8 +81,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/priceView"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/sellStartPrice"
-                    android:inputType="numberDecimal"/>
+                    android:text=""
+                    android:inputType="number"
+                    android:focusableInTouchMode="true"/>
 
             <Button
                     android:layout_width="fill_parent"
