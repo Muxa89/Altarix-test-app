@@ -87,10 +87,10 @@ public class SellActivity extends Activity {
     }
 
     public void sellWare(View view) {
-        String title = validateAndGetValueFromView(titleView, "Введите название", titleValidator);
+        String title = validateAndGetValueFromView(titleView, getString(R.string.sellTitleErrorText), titleValidator);
         WareType wareType = WareType.findByTitle(typesSpinner.getSelectedItem().toString());
-        Integer count = validateAndGetValueFromView(countView, "Неверное количество", countValidator);
-        Double price = validateAndGetValueFromView(priceView, "Неверная стоимость", priceValidator);
+        Integer count = validateAndGetValueFromView(countView, getString(R.string.sellCountErrorText), countValidator);
+        Double price = validateAndGetValueFromView(priceView, getString(R.string.sellPriceErrorText), priceValidator);
 
         if (title != null && price != null && count != null) {
             price *= 100;
@@ -100,7 +100,7 @@ public class SellActivity extends Activity {
 
     public void toBuyPage(View view) {
         try {
-            getIntent().putExtra("soldWares", soldWares.toJSONArray().toString());
+            getIntent().putExtra(BuyActivity.SOLD_WARES, soldWares.toJSONArray().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

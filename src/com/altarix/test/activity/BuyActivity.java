@@ -15,6 +15,8 @@ public class BuyActivity extends Activity {
     public static final int SELL_ACTIVITY_CODE = 10;
     public static final String CURRENT_WARE_INDEX = "currentWareIndex";
     public static final String WARES = "wares";
+    public static final String SOLD_WARES = "soldWares";
+
     private static TextView titleView;
     private static TextView typeView;
     private static TextView countView;
@@ -34,8 +36,6 @@ public class BuyActivity extends Activity {
         initViews();
 
         initWareStorage(savedInstanceState);
-
-
     }
 
     private void initViews() {
@@ -161,9 +161,9 @@ public class BuyActivity extends Activity {
             titleView.setText(ware.getName());
             typeView.setText(ware.getType().getTitle());
             countView.setText(Integer.toString(wareStorage.getCount(ware)));
-            buyButton.setText(String.format("Купить за %d.%02d руб.", ware.getPrice() / 100, ware.getPrice() % 100));
+            buyButton.setText(String.format(getString(R.string.buyButtonFormat), ware.getPrice() / 100, ware.getPrice() % 100));
         } else {
-            titleView.setText("Товар не выбран");
+            titleView.setText(getString(R.string.buyNullWareTitle));
             typeView.setText("");
             countView.setText("");
         }
@@ -176,7 +176,7 @@ public class BuyActivity extends Activity {
         switch (requestCode) {
             case SELL_ACTIVITY_CODE:
                 try {
-                    JSONArray array = new JSONArray(data.getExtras().getString("soldWares"));
+                    JSONArray array = new JSONArray(data.getExtras().getString(SOLD_WARES));
                     WareStorage newWares = new WareStorage(array);
                     wareStorage.add(newWares);
                     fill(null);
