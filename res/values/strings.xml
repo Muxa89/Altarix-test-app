@@ -14,7 +14,7 @@
     <string name="buyCount">Остаток :</string>
     <string name="buyButtonText">Купить</string>
     <string name="buyNullWareTitle">Товар не выбран</string>
-    <string name="buyButtonFormat">Купить за %d.%02d руб.</string>
+    <string name="buyButtonFormat" formatted="false">Купить за %d.%02d руб.</string>
     <string name="sellTitleErrorText">Введите название</string>
     <string name="sellCountErrorText">Неверное количество</string>
     <string name="sellPriceErrorText">Неверная стоимость</string>
