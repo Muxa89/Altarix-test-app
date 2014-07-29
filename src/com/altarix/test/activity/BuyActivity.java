@@ -13,6 +13,8 @@ import org.json.JSONException;
 public class BuyActivity extends Activity {
 
     public static final int SELL_ACTIVITY_CODE = 10;
+    public static final String CURRENT_WARE_INDEX = "currentWareIndex";
+    public static final String WARES = "wares";
     private static TextView titleView;
     private static TextView typeView;
     private static TextView countView;
@@ -31,7 +33,9 @@ public class BuyActivity extends Activity {
 
         initViews();
 
-        loadWares();
+        initWareStorage(savedInstanceState);
+
+
     }
 
     private void initViews() {
@@ -121,12 +125,23 @@ public class BuyActivity extends Activity {
         startActivityForResult(intent, SELL_ACTIVITY_CODE);
     }
 
-    private void loadWares() {
-        IWaresProvider provider = new FakeWaresProvider();
-        wareStorage = provider.getWareStorage();
+    private void initWareStorage(Bundle savedInstanceState) {
+        Integer wareIndex = 0;
+        if (savedInstanceState != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(savedInstanceState.getString(WARES));
+                wareStorage = new WareStorage(jsonArray);
+                wareIndex = savedInstanceState.getInt(CURRENT_WARE_INDEX, 0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            IWaresProvider provider = new FakeWaresProvider();
+            wareStorage = provider.getWareStorage();
+        }
 
         if (wareStorage != null && wareStorage.size() > 0) {
-            currentWare = wareStorage.get(0);
+            currentWare = wareStorage.get(wareIndex);
             fill(currentWare);
         } else {
             fill(null);
@@ -175,6 +190,18 @@ public class BuyActivity extends Activity {
                 break;
             default:
                 return;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        try {
+            outState.putString(WARES, wareStorage.toJSONArray().toString());
+            if (currentWare != null) {
+                outState.putInt(CURRENT_WARE_INDEX, wareStorage.indexOf(currentWare));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
